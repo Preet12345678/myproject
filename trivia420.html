@@ -1,0 +1,233 @@
+<html>
+  <head>
+     <title>TRIVIA!</title>
+      <link rel="icon" type="image/x-icon" href="https://www.favicon.cc/logo3d/823485.png">
+    
+    <style>
+    
+    
+   body{
+  font-size: 20px;
+  font-family: sans-serif;
+background: radial-gradient(circle at 10% 20%, rgb(255, 197, 61) 0%, rgb(255, 94, 7) 90%);
+
+  color: #333;
+}
+.question{
+  font-weight: 600;
+}
+.answers {
+    margin-bottom: 20px;
+}
+
+
+  
+  .topnav a{
+    float:left;
+    display:block;
+    color:white;
+    text-align:center;
+    padding:10px 19px;
+    text-decoration:none;
+    background-color:#034f84;
+  }
+  
+  .topnav a:hover{
+    background-color:orange;
+    color:red;
+  }
+#submit{
+  font-family: sans-serif;
+  font-size: 20px;
+  background-color: #297;
+  color: #fff;
+  border: 0px;
+  border-radius: 3px;
+  padding: 20px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+#submit:hover{
+  background-color: #3a8;
+}
+    </style>
+  </head>
+  <body>
+    <center><h1 style="color:white"><u>Trivia on New Year</u></h1></center>
+<div class="header">
+<div class="topnav">
+<center
+<div class="topnav">
+    <a href="New Year.html">About New Year</a>
+    
+    <a href="Chinese New Year (1).html">Chinese New Year</a>
+    <a href="Hindu New Year (1).html">Hindu New Year</a>
+    <a href="trivia420.html">Trivia!</a>
+    <a href="amazing new year games.html">Games : )</a>
+    
+    
+    </div>
+    </div>
+
+</center>
+
+<br>
+<br>
+<br>
+
+
+</div>
+
+    
+    
+    <div id="quiz"></div> <button id="submit">Get Results</button> <div id="results"></div>
+    
+     <center>
+        <script>
+      var myQuestions = [
+  {
+    question: "How long is the ancient Hawaiian calendar?",
+    answers: {
+      a: '4 months',
+      b: '1 year',
+      c: '12 years'
+    },
+    correctAnswer: 'a'
+  },
+  
+  {
+    question: "What does New Year celebrate?",
+    answers: {
+      a: 'Nothing, its just fun',
+      b: 'the beginning of the new year',
+      c: 'all the good over the year'
+    },
+    correctAnswer: 'b'
+  },
+  
+  {
+    question: "What do you do in Chinese New Year?",
+    answers: {
+      a: 'have a party  ',
+      b: 'give to others',
+      c: 'None of the Above'
+    },
+    correctAnswer: 'b'
+  },
+  
+
+  
+  {
+    question: "What percent of Americans make New year resolutions?",
+    answers: {
+      a: '2%',
+      b: '45%',
+      c: '69%'
+    },
+    correctAnswer: 'b'
+  },
+  
+  {
+    question: "In spain how many grapes do they eat at midnight?",
+    answers: {
+      a: '12',
+      b: '6',
+      c: '39'
+    },
+    correctAnswer: 'a'
+  }
+];
+
+
+
+var quizContainer = document.getElementById('quiz');
+var resultsContainer = document.getElementById('results');
+var submitButton = document.getElementById('submit');
+
+generateQuiz(myQuestions, quizContainer, resultsContainer, submitButton);
+
+function generateQuiz(questions, quizContainer, resultsContainer, submitButton){
+
+  function showQuestions(questions, quizContainer){
+    // we'll need a place to store the output and the answer choices
+    var output = [];
+    var answers;
+
+    // for each question...
+    for(var i=0; i<questions.length; i++){
+      
+      // first reset the list of answers
+      answers = [];
+
+      // for each available answer...
+      for(letter in questions[i].answers){
+
+        // ...add an html radio button
+        answers.push(
+          '<label>'
+            + '<input type="radio" name="question'+i+'" value="'+letter+'">'
+            + letter + ': '
+            + questions[i].answers[letter]
+          + '</label>'
+        );
+      }
+
+      // add this question and its answers to the output
+      output.push(
+        '<div class="question">' + questions[i].question + '</div>'
+        + '<div class="answers">' + answers.join('') + '</div>'
+      );
+    }
+
+    // finally combine our output list into one string of html and put it on the page
+    quizContainer.innerHTML = output.join('');
+  }
+
+
+  function showResults(questions, quizContainer, resultsContainer){
+    
+    // gather answer containers from our quiz
+    var answerContainers = quizContainer.querySelectorAll('.answers');
+    
+    // keep track of user's answers
+    var userAnswer = '';
+    var numCorrect = 0;
+    
+    // for each question...
+    for(var i=0; i<questions.length; i++){
+
+      // find selected answer
+      userAnswer = (answerContainers[i].querySelector('input[name=question'+i+']:checked')||{}).value;
+      
+      // if answer is correct
+      if(userAnswer===questions[i].correctAnswer){
+        // add to the number of correct answers
+        numCorrect++;
+        
+        // color the answers green
+        answerContainers[i].style.color = 'lightgreen';
+      }
+      // if answer is wrong or blank
+      else{
+        // color the answers red
+        answerContainers[i].style.color = 'red';
+      }
+    }
+
+    // show number of correct answers out of total
+    resultsContainer.innerHTML = numCorrect + ' out of ' + questions.length;
+  }
+
+  // show questions right away
+  showQuestions(questions, quizContainer);
+  
+  // on submit, show results
+  submitButton.onclick = function(){
+    showResults(questions, quizContainer, resultsContainer);
+  }
+
+}
+    </script>
+     </center>
+  </body>
+</html>
